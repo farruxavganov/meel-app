@@ -1,0 +1,93 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+}
+
+.mobile-container {
+  width: 100%;
+  max-width: 566px;
+  height: 100%;
+  max-height: 922px;
+  box-shadow: 0 0 6px 0px #666;
+}
+
+.header {
+  width: 100%;
+  height: 56px;
+  border-bottom: 1px solid #666;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+}
+
+.navbar__memu i {
+  font-size: 1.2rem;
+}
+.navbar__memu i:hover {
+  cursor: pointer;
+}
+
+.navbar__link {
+  font-family: cursive;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-transform: capitalize;
+  color: orange;
+}
+
+.navbar__logo.hidden {
+  display: none;
+}
+
+.search__input {
+  border: none;
+  background-color: #ddd;
+  outline-color: darkcyan;
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.search__btn i {
+  font-size: 1rem;
+}
+.search__btn i:hover {
+  cursor: pointer;
+}
+
+.search.hidden .search__input {
+  display: none;
+}
+
+/*# sourceMappingURL=main.css.map */

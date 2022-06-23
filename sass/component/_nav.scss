@@ -1,0 +1,41 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+}
+.navbar__memu i {
+    font-size: 1.2rem;
+    &:hover {
+        cursor: pointer;
+    }
+}
+.navbar__link {
+    font-family: cursive;
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-transform: capitalize;
+    color: orange;
+}
+.navbar__logo.hidden {
+    display: none;
+}
+.search__input {
+    border: none;
+    background-color: #ddd;
+    outline-color: darkcyan;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.search__btn i {
+    font-size: 1rem;
+    &:hover {
+        cursor: pointer;
+    }
+}
+.search.hidden .search__input{
+    display: none;
+}
