@@ -29,6 +29,10 @@ button {
   border: none;
 }
 
+img {
+  width: 50px;
+}
+
 .mobile-container {
   width: 100%;
   max-width: 566px;
