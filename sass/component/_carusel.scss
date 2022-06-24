@@ -1,0 +1,81 @@
+.carusel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.carusel__inner {
+    height: 100%;
+    width: max-content;
+}
+.carusel__items {
+    list-style: none;
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 100%;
+}
+.carusel__item {
+    width: 70px;
+    height: 100%;
+    flex-shrink: 0;
+}
+.carusel__link {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+.carusel__img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.carusel__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.carusel__name {
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.carusel__link:hover .carusel__name {
+    text-overflow: clip;
+}
+.carusel__control {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    pointer-events: none;
+    padding: 0 10px;
+}
+.carusel__btn {
+    pointer-events: auto;
+    &:hover {
+        cursor: pointer;
+    }
+    &:active {
+        transform: scale(.9);
+    }
+}
+.carusel__btn i {
+    font-size: 2rem;
+    color: #fff;
+}
