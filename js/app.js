@@ -35,8 +35,6 @@ function caruselNext() {
 	if(rightInner > rightWrapper + ITEM_WIDTH){
 		state++;
 		caruselInner.style.left = `-${state * ITEM_WIDTH}px`;
-	}else {
-		return;
 	}
 }
 getMealRandom();
@@ -54,6 +52,8 @@ async function getMealById(id) {
 
 	const mealById = await fetch(URL);
 	let data = await mealById.json();
+
+	addStoryMeal(data.meals[0]);
 }
 
 async function getMealSearch(trim){
@@ -64,10 +64,26 @@ async function getMealSearch(trim){
 
 	console.log(data)
 }
+function addStoryMeal(mealData){
+	let carusel__items = document.querySelector(".carusel__items");
+	let li = document.createElement("li");
+	li.classList.add("carusel__item");
+	li.dataset.id = mealData.idMeal;
 
+	li.innerHTML = `
+                <a href="#" class="carusel__link">
+                    <div class="carusel__img">
+                        <img src="${mealData.strMealThumb}" alt="">
+                    </div>
+                    <span class="carusel__name">${mealData.strMeal}</span>
+                </a>
+		`;
+
+	carusel__items.appendChild(li)
+}
 function addMeal(mealData, random=false){
 	let meal = mealData.map(data => {
-		return `<li class="item">
+		return `<li class="item" data-id='${data.idMeal}'>
                     <div class="meel">
                         <div class="meel__head">
                             <img src="${data.strMealThumb}" alt="">
@@ -84,4 +100,73 @@ function addMeal(mealData, random=false){
 	}).join("");
 
     contents.innerHTML = meal;
+    let like = document.querySelectorAll(".meel__btn");
+    addBtnEvent(like);
+}
+
+function addBtnEvent(like){
+	like.forEach(element => {
+		element.addEventListener("click",isLike);
+	})
+}
+
+function isLike(e) {
+	let btn = e.currentTarget;
+	let parnt = e.currentTarget.parentElement.parentElement.parentElement;
+	btn.classList.toggle("active");
+
+	if(!btn.classList.contains('active')){
+		removeLS(parnt.dataset.id);
+		removeEL(parnt.dataset.id);
+	}else {
+		addLS(parnt.dataset.id);
+		getMealById(parnt.dataset.id);
+	}
+}
+
+function getLS(){
+	let data = localStorage.getItem("mealData");
+	data = data ? JSON.parse(localStorage.getItem("mealData")) : [];
+
+	return data;
+}
+
+function addLS(id,) {
+	let data = getLS();
+
+	let obj = {
+		id: id
+	}
+
+	data.push(obj);
+
+	localStorage.setItem("mealData",JSON.stringify(data));
+}
+function removeEL(id) {
+	let carusel__items = document.querySelector(".carusel__items");
+	let childEl = carusel__items.children;
+	for (let i = 0; i < childEl.length; i++){
+		if(childEl[i].dataset.id == id){
+			childEl[i].remove();
+		}
+	}
+}
+function removeLS(id) {
+	let data = getLS();
+
+	data = data.filter(mealId=> {
+		if (mealId.id != id) {
+			return mealId;
+		}
+	})
+
+	localStorage.setItem("mealData",JSON.stringify(data));
+}
+getLSEL();
+function getLSEL() {
+	let data = getLS();
+
+	data.forEach(item => {
+		getMealById(item.id);
+	})
 }

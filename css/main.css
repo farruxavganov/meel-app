@@ -119,6 +119,7 @@ img {
   position: relative;
   height: 100%;
   width: max-content;
+  transition: left 0.7s ease;
 }
 
 .carusel__items {
