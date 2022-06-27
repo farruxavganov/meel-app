@@ -137,6 +137,7 @@ img {
 }
 
 .carusel__link {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
@@ -144,6 +145,14 @@ img {
   align-items: center;
   flex-direction: column;
   overflow: hidden;
+}
+
+.carusel__clear {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #000;
+  opacity: 0;
 }
 
 .carusel__img {
@@ -174,6 +183,10 @@ img {
 
 .carusel__link:hover .carusel__name {
   text-overflow: clip;
+}
+
+.carusel__link:hover .carusel__clear {
+  opacity: 1;
 }
 
 .carusel__control {

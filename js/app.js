@@ -59,32 +59,44 @@ function caruselNext() {
 		caruselInner.style.left = `-${state * ITEM_WIDTH}px`;
 	}
 }
+
 getMealRandom();
 async function getMealRandom() {
 	const URL = "https://www.themealdb.com/api/json/v1/1/random.php";
 
-	const randomMeal = await fetch(URL);
-	let data = await randomMeal.json();
-
-	addMeal(data.meals, true);
+	try {
+		const randomMeal = await fetch(URL);
+		let data = await randomMeal.json();
+		addMeal(data.meals, true);
+	}catch (e) {
+		console.log(e.message)
+	}
 }
 
 async function getMealById(id) {
 	const URL = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + id;
 
-	const mealById = await fetch(URL);
-	let data = await mealById.json();
+	try {
+		const mealById = await fetch(URL);
+		let data = await mealById.json();
 
-	addStoryMeal(data.meals[0]);
+		addStoryMeal(data.meals[0]);
+	}catch (e) {
+		console.log(e.message);
+	}
 }
 
 async function getMealSearch(trim){
 	const URL = "https://www.themealdb.com/api/json/v1/1/search.php?s=" + trim;
 
-	const searchMeal = await fetch(URL);
-	let data = await searchMeal.json();
+	try {
+		const searchMeal = await fetch(URL);
+		let data = await searchMeal.json();
 
-	addMeal(data.meals);
+		addMeal(data.meals);
+	}catch (e){
+		console.log(e.message);
+	}
 }
 function addStoryMeal(mealData){
 	let carusel__items = document.querySelector(".carusel__items");
@@ -94,6 +106,9 @@ function addStoryMeal(mealData){
 
 	li.innerHTML = `
                 <a href="#" class="carusel__link">
+                	<span class="carusel__clear">
+                		<i class="fas fa-close"></i>
+                	</span>
                     <div class="carusel__img">
                         <img src="${mealData.strMealThumb}" alt="">
                     </div>
@@ -102,6 +117,22 @@ function addStoryMeal(mealData){
 		`;
 
 	carusel__items.appendChild(li)
+	let btns = document.querySelectorAll(".carusel__clear");
+	btns.forEach(btn =>{
+		btn.addEventListener("click",(e)=>{
+		let li = e.currentTarget.parentElement.parentElement;
+		removeEL(li.dataset.id);
+		removeLS(li.dataset.id);
+
+		document.querySelectorAll(".meel__btn").forEach(btn => {
+			if (li.dataset.id === btn.parentElement.parentElement.parentElement.dataset.id) {
+				if(btn.classList.contains("active")){
+				btn.classList.remove("active")
+			}
+			}
+		})
+	})
+	})
 }
 function addMeal(mealData, random=false){
 	let meal = mealData.map(data => {
