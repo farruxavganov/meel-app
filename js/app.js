@@ -1,10 +1,32 @@
 const carusel = document.querySelector(".carusel");
 const caruselInner = carusel.querySelector(".carusel__inner");
 const contents  = document.querySelector(".contents");
+const searchBtn = document.querySelector(".search__btn");
+const navLogo = document.querySelector(".navbar__logo");
+const search = document.querySelector(".search");
 
 const ITEM_WIDTH = 70;
 let state = 0;
+
+searchBtn.addEventListener("click", addInput);
 carusel.addEventListener("click", caruselControl);
+
+
+function addInput(e) {
+	let inputValue = e.currentTarget.previousElementSibling;
+
+	if(!inputValue.value){
+		if(!navLogo.classList.contains("hidden")){
+			navLogo.classList.add("hidden");
+			search.classList.remove("hidden");
+		}else {
+			search.classList.add("hidden");
+			navLogo.classList.remove("hidden");
+		}
+	}else {
+		getMealSearch(inputValue.value);
+	}
+}
 
 function caruselControl(e) {
 	let element = e.target.parentElement;
@@ -62,7 +84,7 @@ async function getMealSearch(trim){
 	const searchMeal = await fetch(URL);
 	let data = await searchMeal.json();
 
-	console.log(data)
+	addMeal(data.meals);
 }
 function addStoryMeal(mealData){
 	let carusel__items = document.querySelector(".carusel__items");
