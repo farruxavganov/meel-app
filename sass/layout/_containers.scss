@@ -6,3 +6,9 @@
     box-shadow: 0 0 6px 0px #666;
     overflow-y: auto;
 }
+
+@media (max-width: 566px) {
+    .mobile-container {
+        min-height: 100vh;
+    }
+}

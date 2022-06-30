@@ -4,12 +4,16 @@ const contents  = document.querySelector(".contents");
 const searchBtn = document.querySelector(".search__btn");
 const navLogo = document.querySelector(".navbar__logo");
 const search = document.querySelector(".search");
+const pupapClose = document.querySelector(".pupap__close");
 
 const ITEM_WIDTH = 70;
 let state = 0;
 
 searchBtn.addEventListener("click", addInput);
 carusel.addEventListener("click", caruselControl);
+pupapClose.addEventListener("click", ()=> {
+	document.querySelector(".pupap").classList.add("hidden");
+})
 
 
 function addInput(e) {
@@ -73,14 +77,17 @@ async function getMealRandom() {
 	}
 }
 
-async function getMealById(id) {
+async function getMealById(id, close = false) {
 	const URL = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + id;
 
 	try {
 		const mealById = await fetch(URL);
 		let data = await mealById.json();
 
-		addStoryMeal(data.meals[0]);
+		if (!close) {
+			addStoryMeal(data.meals[0]);
+		}
+		pupapAPI(data.meals[0]);
 	}catch (e) {
 		console.log(e.message);
 	}
@@ -117,13 +124,18 @@ function addStoryMeal(mealData){
 		`;
 
 	carusel__items.appendChild(li)
-	let btns = document.querySelectorAll(".carusel__clear");
-	btns.forEach(btn =>{
+	let linls = li.querySelector(".carusel__link");
+	linls.addEventListener("click", (e)=>{
+		let PE = e.currentTarget.parentElement;
+		getMealById(PE.dataset.id, true);
+		document.querySelector(".pupap").classList.remove("hidden");
+
+	})
+	let btn = li.querySelector(".carusel__clear");
 		btn.addEventListener("click",(e)=>{
 		let li = e.currentTarget.parentElement.parentElement;
 		removeEL(li.dataset.id);
 		removeLS(li.dataset.id);
-
 		document.querySelectorAll(".meel__btn").forEach(btn => {
 			if (li.dataset.id === btn.parentElement.parentElement.parentElement.dataset.id) {
 				if(btn.classList.contains("active")){
@@ -132,8 +144,17 @@ function addStoryMeal(mealData){
 			}
 		})
 	})
-	})
 }
+function pupapAPI(data) {
+			const title = document.querySelector(".pupap__title");
+			const img = document.querySelector(".pupap__img img");
+			const disc = document.querySelector(".pupap__p");
+
+			title.innerHTML = data.strMeal;
+			img.src = data.strMealThumb;
+			disc.innerHTML = data.strInstructions;
+			console.log(data)
+		}
 function addMeal(mealData, random=false){
 	let meal = mealData.map(data => {
 		return `<li class="item" data-id='${data.idMeal}'>
